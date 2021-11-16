@@ -15,7 +15,6 @@ export default function Layout(props: LayoutProps) {
             <div className="p-6">
                 {props.children}
             </div>
-
         </div>
     )
 }

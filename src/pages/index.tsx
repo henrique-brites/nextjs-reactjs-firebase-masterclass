@@ -1,3 +1,4 @@
+import Button from "../components/Button";
 import Layout from "../components/Layout";
 import Table from "../components/Table";
 import Client from "../core/Client";
@@ -27,6 +28,9 @@ export default function Home() {
       bg-gradient-to-r from-blue-500 to-purple-500
     `}>
       <Layout title="Cadastro Simples">
+        <div className="flex justify-end">
+          <Button color="green" className="mb-4">Novo Cliente</Button>
+        </div>
         <Table clients={clients}
           clientSelected={clientSelected}
           clientDeleted={clientDeleted}

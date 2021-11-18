@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Button from "../components/Button";
 import Form from "../components/Form";
 import Layout from "../components/Layout";
@@ -23,20 +24,38 @@ export default function Home() {
 
   }
 
+  function saveClient(client: Client) {
+    console.log(client);
+
+  }
+
+  const [visible, setVisible] = useState<'tabela' | 'form'>('tabela');
+
   return (
     <div className={`
       flex justify-center items-center h-screen
       bg-gradient-to-r from-blue-500 to-purple-500
     `}>
       <Layout title="Cadastro Simples">
-        <div className="flex justify-end">
-          <Button color="green" className="mb-4">Novo Cliente</Button>
-        </div>
-        <Table clients={clients}
-          clientSelected={clientSelected}
-          clientDeleted={clientDeleted}
-        />
-        <Form client={clients[0]} />
+        {visible === 'tabela' ? (
+          <>
+            <div className="flex justify-end">
+              <Button color="green" className="mb-4"
+                onClick={() => setVisible('form')}
+              >Novo Cliente</Button>
+            </div>
+            <Table clients={clients}
+              clientSelected={clientSelected}
+              clientDeleted={clientDeleted}
+            />
+          </>
+        ) : (
+          <Form
+            client={clients[2]}
+            clientChange={saveClient}
+            cancel={() => setVisible('tabela')}
+          />
+        )}
       </Layout>
     </div>
   )

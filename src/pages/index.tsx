@@ -15,30 +15,33 @@ export default function Home() {
   const [clients, setClients] = useState<Client[]>([])
   const [visible, setVisible] = useState<'tabela' | 'form'>('tabela');
 
-  useEffect(() => {
-    repo.getAll().then(setClients)
-  }, [])
+  useEffect(getAll, [])
+
+  function getAll() {
+    repo.getAll().then(clients => {
+      setClients(clients)
+      setVisible('tabela')
+    })
+  }
 
   function clientSelected(client: Client) {
     setClient(client)
     setVisible('form')
   }
 
-  function clientDeleted(client: Client) {
-    console.log(`Excluir... ${client.name}`)
-
+  async function clientDeleted(client: Client) {
+    await repo.delete(client)
+    getAll()
   }
 
   function newClient() {
     setClient(Client.empty())
     setVisible('form')
-
   }
 
-  function saveClient(client: Client) {
-    repo.save(client)
-    setVisible('tabela')
-
+  async function saveClient(client: Client) {
+    await repo.save(client)
+    getAll()
   }
 
   return (
